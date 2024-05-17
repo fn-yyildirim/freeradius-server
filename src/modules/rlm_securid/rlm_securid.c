@@ -496,7 +496,7 @@ static rlm_rcode_t CC_HINT(nonnull) mod_authenticate(void *instance, REQUEST *re
 	password = request->password->vp_strvalue;
 
 	if (RDEBUG_ENABLED3) {
-		RDEBUG3("Login attempt with password \"%s\"", password);
+		RDEBUG3("Login attempt with password");
 	} else {
 		RDEBUG("Login attempt with password");
 	}
