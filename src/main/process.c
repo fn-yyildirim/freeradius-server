@@ -450,6 +450,8 @@ static void tv_add(struct timeval *tv, int usec_delay)
  */
 static void debug_packet(REQUEST *request, RADIUS_PACKET *packet, bool received)
 {
+	//yyildirim
+	return;
 	char src_ipaddr[128];
 	char dst_ipaddr[128];
 

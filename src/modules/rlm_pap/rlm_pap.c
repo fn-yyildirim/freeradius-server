@@ -268,13 +268,13 @@ redo:
 
 		attr = fr_str2int(header_names, buffer, 0);
 		if (!attr) {
-			if (RDEBUG_ENABLED3) {
-				RDEBUG3("Unknown header %s in Password-With-Header = \"%s\", re-writing to "
-					"Cleartext-Password", buffer, vp->vp_strvalue);
-			} else {
-				RDEBUG("Unknown header %s in Password-With-Header, re-writing to "
-				       "Cleartext-Password", buffer);
-			}
+			//if (RDEBUG_ENABLED3) {
+			//	RDEBUG3("Unknown header %s in Password-With-Header = \"%s\", re-writing to "
+			//		"Cleartext-Password", buffer, vp->vp_strvalue);
+			//} else {
+			//	RDEBUG("Unknown header %s in Password-With-Header, re-writing to "
+			//	       "Cleartext-Password", buffer);
+			//}
 			goto unknown_header;
 		}
 
@@ -291,18 +291,18 @@ redo:
 			fr_pair_value_strcpy(new, q + 1);
 		}
 
-		if (RDEBUG_ENABLED3) {
-			char *old_value, *new_value;
+		//if (RDEBUG_ENABLED3) {
+		//	char *old_value, *new_value;
 
-			old_value = vp_aprints_value(request, vp, '\'');
-			new_value = vp_aprints_value(request, new, '\'');
-			RDEBUG3("Converted: &control:%s = '%s' -> &control:%s = '%s'",
-				vp->da->name, old_value, new->da->name, new_value);
-			talloc_free(old_value);
-			talloc_free(new_value);
-		} else {
-			RDEBUG2("Converted: &control:%s -> &control:%s", vp->da->name, new->da->name);
-		}
+		//	old_value = vp_aprints_value(request, vp, '\'');
+		//	new_value = vp_aprints_value(request, new, '\'');
+		//	RDEBUG3("Converted: &control:%s = '%s' -> &control:%s = '%s'",
+		//		vp->da->name, old_value, new->da->name, new_value);
+		//	talloc_free(old_value);
+		//	talloc_free(new_value);
+		//} else {
+		//	RDEBUG2("Converted: &control:%s -> &control:%s", vp->da->name, new->da->name);
+		//}
 
 		return new;
 	}
@@ -314,8 +314,8 @@ redo:
 	 */
 	decoded = fr_base64_decode(digest, sizeof(digest) - 1, vp->vp_strvalue, len);
 	if ((decoded > 0) && (digest[0] == '{') && (memchr(digest, '}', decoded) != NULL)) {
-		RDEBUG2("Normalizing %s from base64 encoding, %zu bytes -> %zu bytes",
-			vp->da->name, vp->vp_length, decoded);
+		//RDEBUG2("Normalizing %s from base64 encoding, %zu bytes -> %zu bytes",
+		//	vp->da->name, vp->vp_length, decoded);
 		/*
 		 *	Password-With-Header is a string attribute.
 		 *	Even though we're handling binary data, the buffer
@@ -328,12 +328,12 @@ redo:
 		goto redo;
 	}
 
-	if (RDEBUG_ENABLED3) {
-		RDEBUG3("No {...} in Password-With-Header = \"%s\", re-writing to "
-			"Cleartext-Password", vp->vp_strvalue);
-	} else {
-		RDEBUG("No {...} in Password-With-Header, re-writing to Cleartext-Password");
-	}
+	//if (RDEBUG_ENABLED3) {
+	//	RDEBUG3("No {...} in Password-With-Header = \"%s\", re-writing to "
+	//		"Cleartext-Password", vp->vp_strvalue);
+	//} else {
+	//	RDEBUG("No {...} in Password-With-Header, re-writing to Cleartext-Password");
+	//}
 
 unknown_header:
 	new = fr_pair_afrom_num(request, PW_CLEARTEXT_PASSWORD, 0);
@@ -560,11 +560,11 @@ static rlm_rcode_t CC_HINT(nonnull) mod_authorize(void *instance, REQUEST *reque
 
 static rlm_rcode_t CC_HINT(nonnull) pap_auth_clear(UNUSED rlm_pap_t *inst, REQUEST *request, VALUE_PAIR *vp)
 {
-	if (RDEBUG_ENABLED3) {
-		RDEBUG3("Comparing with \"known good\" Cleartext-Password \"%s\" (%zd)", vp->vp_strvalue, vp->vp_length);
-	} else {
-		RDEBUG("Comparing with \"known good\" Cleartext-Password");
-	}
+	//if (RDEBUG_ENABLED3) {
+	//	RDEBUG3("Comparing with \"known good\" Cleartext-Password \"%s\" (%zd)", vp->vp_strvalue, vp->vp_length);
+	//} else {
+	//	RDEBUG("Comparing with \"known good\" Cleartext-Password");
+	//}
 
 	if ((vp->vp_length != request->password->vp_length) ||
 	    (rad_digest_cmp(vp->vp_octets,
@@ -578,11 +578,11 @@ static rlm_rcode_t CC_HINT(nonnull) pap_auth_clear(UNUSED rlm_pap_t *inst, REQUE
 
 static rlm_rcode_t CC_HINT(nonnull) pap_auth_crypt(UNUSED rlm_pap_t *inst, REQUEST *request, VALUE_PAIR *vp)
 {
-	if (RDEBUG_ENABLED3) {
-		RDEBUG3("Comparing with \"known good\" Crypt-Password \"%s\"", vp->vp_strvalue);
-	} else {
-		RDEBUG("Comparing with \"known-good\" Crypt-password");
-	}
+	//if (RDEBUG_ENABLED3) {
+	//	RDEBUG3("Comparing with \"known good\" Crypt-Password \"%s\"", vp->vp_strvalue);
+	//} else {
+	//	RDEBUG("Comparing with \"known-good\" Crypt-password");
+	//}
 
 	if (fr_crypt_check(request->password->vp_strvalue,
 			   vp->vp_strvalue) != 0) {
@@ -813,7 +813,7 @@ static rlm_rcode_t CC_HINT(nonnull) pap_auth_ssha2(rlm_pap_t *inst, REQUEST *req
 		rad_assert(0);
 	}
 
-	RDEBUG("Comparing with \"known-good\" %s-Password", name);
+	//RDEBUG("Comparing with \"known-good\" %s-Password", name);
 
 	/*
 	 *	Unlike plain SHA2 we already know what length
@@ -823,8 +823,8 @@ static rlm_rcode_t CC_HINT(nonnull) pap_auth_ssha2(rlm_pap_t *inst, REQUEST *req
 	if (inst->normify) normify(request, vp, min_len + 1);
 
 	if (vp->vp_length <= min_len) {
-		REDEBUG("\"known-good\" %s-Password has incorrect length, got %zu bytes, need at least %u bytes",
-			name, vp->vp_length, min_len + 1);
+		//REDEBUG("\"known-good\" %s-Password has incorrect length, got %zu bytes, need at least %u bytes",
+		//	name, vp->vp_length, min_len + 1);
 		return RLM_MODULE_INVALID;
 	}
 

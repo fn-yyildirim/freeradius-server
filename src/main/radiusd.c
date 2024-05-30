@@ -255,9 +255,9 @@ int main(int argc, char *argv[])
 				spawn_flag = false;
 				main_config.daemonize = false;
 				rad_debug_lvl += 2;
-				main_config.log_auth = true;
-				main_config.log_auth_badpass = true;
-				main_config.log_auth_goodpass = true;
+				main_config.log_auth = false;
+				main_config.log_auth_badpass = false;
+				main_config.log_auth_goodpass = false;
 		do_stdout:
 				fr_log_fp = stdout;
 				default_log.dst = L_DST_STDOUT;

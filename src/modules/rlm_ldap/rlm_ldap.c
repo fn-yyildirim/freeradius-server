@@ -1575,7 +1575,7 @@ static rlm_rcode_t mod_authorize(void *instance, REQUEST *request)
 		 */
 		res = nmasldap_get_password(conn->handle, dn, password, &pass_size);
 		if (res != 0) {
-			REDEBUG("Failed to retrieve eDirectory password: (%i) %s", res, edir_errstr(res));
+			REDEBUG("Failed to retrieve eDirectory password: REDACTED - rlm_ldap.c");
 			rcode = RLM_MODULE_FAIL;
 
 			goto finish;
@@ -1589,7 +1589,8 @@ static rlm_rcode_t mod_authorize(void *instance, REQUEST *request)
 		vp->vp_length = pass_size;
 
 		if (RDEBUG_ENABLED3) {
-			RDEBUG3("Added eDirectory password.  control:%s += '%s'", vp->da->name, vp->vp_strvalue);
+			RDEBUG3("Added eDirectory password. REDACTED - rlm_ldap.c");
+			//RDEBUG3("Added eDirectory password.  control:%s += '%s'", vp->da->name, vp->vp_strvalue);
 		} else {
 			RDEBUG2("Added eDirectory password");
 		}
